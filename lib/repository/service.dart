@@ -1,14 +1,13 @@
-import 'package:part_details/model/part_details_model.dart';
-import 'package:http/http.dart' as http;
+String? isValidNumber(String? value) {
+  final pattern = RegExp(r'^[0-9]+$');
 
-class RemoteService{
-  Future<PartDetails?> getPartDetails() async{
-    var client =http.Client();
-    var uri=Uri.parse('http://crm.bemlindia.in/beml/modules/Mobile/v1/fetchRecordWithGrouping');
-    var response= await client.post(uri);
-    if(response.statusCode==200){
-      var json1=response.body;
-      return PartDetails.fromJson(json1.toString() as Map<String, dynamic>);
-    }
+  if (value == null || value.trim().isEmpty) {
+    return "Quantity can not be empty";
+  } else if ((!pattern.hasMatch(value.trim()) ||
+      value.trim().length > 0 ||
+      value.trim().length < 0)) {
+    return " submited Quantity should not be 0";
+  } else {
+    return null;
   }
 }

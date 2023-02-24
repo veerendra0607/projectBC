@@ -18,7 +18,7 @@ class PartDetails {
   PartDetails.fromJson(Map<String, dynamic> json) {
     try{
       statuscode = json['statuscode'];
-      data = json['data'] != null ?  Data.fromJson(json['data']) : null;
+      data = json['data'] != null ?  Data.fromJson(json['data']) : Data.fromJson(json['data']);
       statusMessage = json['statusMessage'];
     }catch(e){
       print(e);
@@ -43,11 +43,14 @@ class Data {
   });
 
   Record? record;
+  Data.fromJson(Map<String, dynamic> json) {
+    try{
+      record = json["record"] == null ? null : Record.fromJson(json["record"]);
+    }catch(e){
+      print(e);
+    }
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    record: json["record"] == null ? null : Record.fromJson(json["record"]),
-  );
-
+  }
   Map<String, dynamic> toJson() => {
     "record": record?.toJson(),
   };
@@ -68,13 +71,19 @@ class Record {
   String? po;
   DateTime? podate;
 
-  factory Record.fromJson(Map<String, dynamic> json) => Record(
-    blocks: json["blocks"] == null ? [] : List<Block>.from(json["blocks"]!.map((x) => Block.fromJson(x))),
-    id: json["id"],
-    lineItems: json["LineItems"] == null ? [] : List<LineItem>.from(json["LineItems"]!.map((x) => LineItem.fromJson(x))),
-    po: json["po"],
-    podate: json["podate"] == null ? null : DateTime.parse(json["podate"]),
-  );
+   Record.fromJson(Map<String, dynamic> json) {
+    try{
+      blocks= json["blocks"] == null ? [] : List<Block>.from(json["blocks"]!.map((x) => Block.fromJson(x)));
+    id= json["id"];
+    lineItems= json["LineItems"] == null ? [] : List<LineItem>.from(json["LineItems"]!.map((x) => LineItem.fromJson(x)));
+    po= json["po"];
+    podate=json["podate"] == null ? null : DateTime.parse(json["podate"]);
+    }
+    catch(e){
+      print(e);
+    }
+  }
+
 
   Map<String, dynamic> toJson() => {
     "blocks": blocks == null ? [] : List<dynamic>.from(blocks!.map((x) => x.toJson())),
@@ -94,11 +103,16 @@ class Block {
   String? label;
   List<Field>? fields;
 
-  factory Block.fromJson(Map<String, dynamic> json) => Block(
-    label: json["label"],
-    fields: json["fields"] == null ? [] : List<Field>.from(json["fields"]!.map((x) => Field.fromJson(x))),
-  );
-
+   Block.fromJson(Map<String, dynamic> json) {
+     try {
+       label = json["label"];
+       fields = json["fields"] == null ? [] : List<Field>.from(
+           json["fields"]!.map((x) => Field.fromJson(x)));
+     }
+     catch(e){
+       print(e);
+     }
+   }
   Map<String, dynamic> toJson() => {
     "label": label,
     "fields": fields == null ? [] : List<dynamic>.from(fields!.map((x) => x.toJson())),
@@ -124,15 +138,20 @@ class Field {
   Type? type;
   String? id;
 
-  factory Field.fromJson(Map<String, dynamic> json) => Field(
-    name: json["name"],
-    value: json["value"],
-    label: json["label"],
-    uitype: json["uitype"],
-    editable: json["editable"],
-    type: json["type"] == null ? null : Type.fromJson(json["type"]),
-    id: json["id"],
-  );
+   Field.fromJson(Map<String, dynamic> json){
+   try{
+     name= json["name"];
+     value= json["value"];
+     label= json["label"];
+     uitype= json["uitype"];
+     editable= json["editable"];
+     type= json["type"] == null ? null : Type.fromJson(json["type"]);
+     id= json["id"];
+   }
+   catch(e){
+     print(e);
+   }
+  }
 
   Map<String, dynamic> toJson() => {
     "name": name,
@@ -152,10 +171,13 @@ class Type {
 
   DefaultValue? defaultValue;
 
-  factory Type.fromJson(Map<String, dynamic> json) => Type(
-    defaultValue: json["defaultValue"] == null ? null : DefaultValue.fromJson(json["defaultValue"]),
-  );
-
+   Type.fromJson(Map<String, dynamic> json) {
+     try{
+  defaultValue=json["defaultValue"] == null ? null : DefaultValue.fromJson(json["defaultValue"]);
+  }catch(e){
+       print(e);
+  }
+   }
   Map<String, dynamic> toJson() => {
     "defaultValue": defaultValue?.toJson(),
   };
@@ -170,10 +192,15 @@ class DefaultValue {
   String? value;
   String? label;
 
-  factory DefaultValue.fromJson(Map<String, dynamic> json) => DefaultValue(
-    value: json["value"],
-    label: json["label"],
-  );
+   DefaultValue.fromJson(Map<String, dynamic> json) {
+    try{
+      value=json["value"];
+    label=json["label"];
+    }
+    catch(e){
+      print(e);
+    }
+  }
 
   Map<String, dynamic> toJson() => {
     "value": value,
@@ -240,35 +267,40 @@ class LineItem {
   String? lineitemId;
   String? productName;
 
-  factory LineItem.fromJson(Map<String, dynamic> json) => LineItem(
-    productid: json["productid"],
-    productname: json["productname"],
-    quantity: json["quantity"],
-    comment: json["comment"],
-    remarksByEng: json["remarks_by_eng"],
-    replacedDate: json["replaced_date"] == null ? null : DateTime.parse(json["replaced_date"]),
-    dateOfSubmiss: json["date_of_submiss"],
-    collectImmidiately: json["collect_immidiately"],
-    failPaSbQty: json["fail_pa_sb_qty"],
-    failPaPaStatus: json["fail_pa_pa_status"],
-    excludedQty: json["excluded_qty"],
-    excludedQtyRem: json["excluded_qty_rem"],
-    pendingQtyToSub: json["pending_qty_to_sub"],
-    rcvdQtyTrValidate: json["rcvd_qty_tr_validate"],
-    rcvdQtyValidated: json["rcvd_qty_validated"],
-    vendorNameLabel: json["vendor_name_Label"],
-    vendorName: json["vendor_name"],
-    pendingDays: json["pending_days"],
-    salesorderCrQty: json["salesorder_cr_qty"],
-    soCreatableQty: json["so_creatable_qty"],
-    totalExcludedQty: json["total_excluded_qty"],
-    totExcludedQtyRem: json["tot_excluded_qty_rem"] == null ? [] : List<dynamic>.from(json["tot_excluded_qty_rem"]!.map((x) => x)),
-    totalFailPaSbQty: json["total_fail_pa_sb_qty"],
-    pendingQtyForValidation: json["pending_qty_for_validation"],
-    submittedQtyLog: json["submitted_qty_log"] == null ? [] : List<dynamic>.from(json["submitted_qty_log"]!.map((x) => x)),
-    lineitemId: json["lineitem_id"],
-    productName: json["product_name"],
-  );
+   LineItem.fromJson(Map<String, dynamic> json) {
+     try{
+       productid=json["productid"];
+     productname= json["productname"];
+     quantity= json["quantity"];
+     comment= json["comment"];
+     remarksByEng= json["remarks_by_eng"];
+     replacedDate= json["replaced_date"] == null ? null : DateTime.parse(json["replaced_date"]);
+     dateOfSubmiss= json["date_of_submiss"];
+     collectImmidiately= json["collect_immidiately"];
+     failPaSbQty= json["fail_pa_sb_qty"];
+     failPaPaStatus= json["fail_pa_pa_status"];
+     excludedQty= json["excluded_qty"];
+     excludedQtyRem= json["excluded_qty_rem"];
+     pendingQtyToSub= json["pending_qty_to_sub"];
+     rcvdQtyTrValidate= json["rcvd_qty_tr_validate"];
+     rcvdQtyValidated=json["rcvd_qty_validated"];
+     vendorNameLabel=json["vendor_name_Label"];
+     vendorName= json["vendor_name"];
+     pendingDays= json["pending_days"];
+     salesorderCrQty= json["salesorder_cr_qty"];
+     soCreatableQty= json["so_creatable_qty"];
+     totalExcludedQty= json["total_excluded_qty"];
+     totExcludedQtyRem= json["tot_excluded_qty_rem"] == null ? [] : List<dynamic>.from(json["tot_excluded_qty_rem"]!.map((x) => x));
+     totalFailPaSbQty=json["total_fail_pa_sb_qty"];
+     pendingQtyForValidation= json["pending_qty_for_validation"];
+     submittedQtyLog=json["submitted_qty_log"] == null ? [] : List<dynamic>.from(json["submitted_qty_log"]!.map((x) => x));
+     lineitemId=json["lineitem_id"];
+     productName=json["product_name"];
+     }
+     catch(e){
+       print(e);
+     }
+   }
 
   Map<String, dynamic> toJson() => {
     "productid": productid,
@@ -276,7 +308,7 @@ class LineItem {
     "quantity": quantity,
     "comment": comment,
     "remarks_by_eng": remarksByEng,
-    "replaced_date": "${replacedDate!.year.toString().padLeft(4, '0')}-${replacedDate!.month.toString().padLeft(2, '0')}-${replacedDate!.day.toString().padLeft(2, '0')}",
+    // "replaced_date": "${replacedDate!.year.toString().padLeft(4, '0')}-${replacedDate!.month.toString().padLeft(2, '0')}-${replacedDate!.day.toString().padLeft(2, '0')}",
     "date_of_submiss": dateOfSubmiss,
     "collect_immidiately": collectImmidiately,
     "fail_pa_sb_qty": failPaSbQty,
@@ -296,6 +328,47 @@ class LineItem {
     "total_fail_pa_sb_qty": totalFailPaSbQty,
     "pending_qty_for_validation": pendingQtyForValidation,
     "submitted_qty_log": submittedQtyLog == null ? [] : List<dynamic>.from(submittedQtyLog!.map((x) => x)),
+    "lineitem_id": lineitemId,
+    "product_name": productName,
+  };
+}
+
+class LineItemEdit {
+  LineItemEdit({
+    this.productid,
+    this.quantity,
+    this.remarksByEng,
+    this.dateOfSubmiss,
+    this.lineitemId,
+    this.productName,
+  });
+
+  String? productid;
+  String? quantity;
+  String? remarksByEng;
+  String? dateOfSubmiss;
+  String? lineitemId;
+  String? productName;
+
+  LineItemEdit.fromJson(Map<String, dynamic> json) {
+    try{
+      productid=json["productid"];
+      quantity= json["quantity"];
+      remarksByEng= json["remarks_by_eng"];
+      dateOfSubmiss= json["date_of_submiss"];
+      lineitemId=json["lineitem_id"];
+      productName=json["product_name"];
+    }
+    catch(e){
+      print(e);
+    }
+  }
+
+  Map<String, dynamic> toJson() => {
+    "productid": productid,
+    "quantity": quantity,
+    "remarks_by_eng": remarksByEng,
+    "date_of_submiss": dateOfSubmiss,
     "lineitem_id": lineitemId,
     "product_name": productName,
   };
