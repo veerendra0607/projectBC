@@ -81,22 +81,22 @@ class _EditPartDetailsState extends State<EditPartDetails> {
                     ],),
                     Row(children: [
                       Text('Ticket Id'),
-                      SizedBox(width: 20,),
+                      SizedBox(width: 75,),
                       Text(': TT1497'),
                     ],),
                     Row(children: [
                       Text('Customer'),
-                      SizedBox(width: 20,),
+                      SizedBox(width: 70,),
                       Text(': BRUNDABAN SAHOO'),
                     ],),
                     Row(children: [
                       Text('Project'),
-                      SizedBox(width: 20,),
+                      SizedBox(width: 80,),
                       Text(': CCL RAJRAPPA,\n  RAJRAPPA DIST\n  KHARKAHAND'),
                     ],),
                     Row(children: [
                       Text('Notification No'),
-                      SizedBox(width: 20,),
+                      SizedBox(width: 30,),
                       Text(': BH60M-60621'),
                     ]
                     )
